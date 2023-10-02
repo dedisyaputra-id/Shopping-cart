@@ -4,6 +4,6 @@
     "title": "Shopping Cart Api Specifications",
     "version": "1.0"
   },
-  "servers": [{ "url": "https://api.server.test/v1" }],
+  "servers": [{ "url": "https://api/products" }],
   "paths": {}
 }
