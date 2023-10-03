@@ -1,9 +1,87 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "Shopping Cart Api Specifications",
-    "version": "1.0"
+    "title": "Shoping Cart RestFul Api",
+    "version": "1.0",
+    "description": "Api for shoping cart RestFul API",
+    "contact": {
+      "name": "Dedi Syaputra",
+      "email": "dedisyaputra611@gmail.com"
+    }
   },
-  "servers": [{ "url": "https://api/products" }],
-  "paths": {}
+  "servers": [
+    {
+      "url": "http://localhost:3200/{environtment}/api/v1",
+      "description": "Shoping cart RestFul Api server",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "description": "Server environtment",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/register": { "post": { "summary": "create new users", "responses": {} } },
+    "/login": {
+      "post": {
+        "summary": "login for users",
+        "description": "api for login users",
+        "responses": {}
+      }
+    },
+    "/products": {
+      "get": { "summary": "get all data products", "responses": {} }
+    },
+    "/products/{productName}": {
+      "get": {
+        "summary": "get specific product data",
+        "responses": {},
+        "parameters": [
+          {
+            "name": "productName",
+            "in": "path",
+            "required": true,
+            "description": "productName for get specific product"
+          }
+        ]
+      },
+      "post": {
+        "summary": "add product to cart",
+        "responses": {},
+        "parameters": [
+          {
+            "name": "productName",
+            "in": "path",
+            "required": true,
+            "description": "productName for add specific product to cart"
+          }
+        ]
+      }
+    },
+    "/cart": {
+      "get": { "summary": "get all data cart", "responses": {} }
+    },
+    "/cart/address": {
+      "post": { "summary": "create address for product data", "responses": {} }
+    },
+    "/cart/{productName}": {
+      "delete": {
+        "summary": "delete specific product",
+        "responses": {},
+        "parameters": [
+          {
+            "name": "productName",
+            "in": "path",
+            "required": true,
+            "description": "productName for delete specific product from cart"
+          }
+        ]
+      }
+    },
+    "/cart/checkout": {
+      "post": { "summary": "checkout product from cart", "responses": {} }
+    }
+  }
 }
