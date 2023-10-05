@@ -23,12 +23,89 @@
     }
   ],
   "paths": {
-    "/register": { "post": { "summary": "create new users", "responses": {} } },
+    "/register": {
+      "post": {
+        "summary": "create new users",
+        "responses": {},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 4,
+                    "maxLength": 100,
+                    "required": ["true"]
+                  },
+                  "email": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 100,
+                    "required": ["true"]
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "required": ["true"]
+                  },
+                  "phone_number": {
+                    "type": "number",
+                    "minLength": 12,
+                    "maxLength": 12,
+                    "required": ["true"]
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string",
+                        "minLength": 4,
+                        "required": ["true"]
+                      },
+                      "street": {
+                        "type": "string",
+                        "minLength": 4,
+                        "required": ["true"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/login": {
       "post": {
         "summary": "login for users",
         "description": "api for login users",
-        "responses": {}
+        "responses": {},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "minLength": 8,
+                    "required": ["true"]
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "required": ["true"]
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/products": {
@@ -43,7 +120,12 @@
             "name": "productName",
             "in": "path",
             "required": true,
-            "description": "productName for get specific product"
+            "description": "productName for get specific product",
+            "schema": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 100
+            }
           }
         ]
       },
@@ -55,7 +137,8 @@
             "name": "productName",
             "in": "path",
             "required": true,
-            "description": "productName for add specific product to cart"
+            "description": "productName for add specific product to cart",
+            "schema": { "type": "string", "minLength": 4, "maxLength": 100 }
           }
         ]
       }
@@ -64,7 +147,37 @@
       "get": { "summary": "get all data cart", "responses": {} }
     },
     "/cart/address": {
-      "post": { "summary": "create address for product data", "responses": {} }
+      "post": {
+        "summary": "create address for product data",
+        "responses": {},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string",
+                        "minLength": 4,
+                        "required": ["true"]
+                      },
+                      "street": {
+                        "type": "string",
+                        "minLength": 4,
+                        "required": ["true"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "/cart/{productName}": {
       "delete": {
@@ -75,13 +188,50 @@
             "name": "productName",
             "in": "path",
             "required": true,
-            "description": "productName for delete specific product from cart"
+            "description": "productName for delete specific product from cart",
+            "schema": { "type": "string", "minLength": 4, "maxLength": 100 }
           }
         ]
       }
     },
     "/cart/checkout": {
-      "post": { "summary": "checkout product from cart", "responses": {} }
+      "post": {
+        "summary": "checkout product from cart",
+        "responses": {},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "total_product": {
+                    "type": "number",
+                    "minLength": 1,
+                    "required": ["true"]
+                  },
+                  "price": { "type": "number", "required": ["true"] },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string",
+                        "minLength": 4,
+                        "required": ["true"]
+                      },
+                      "street": {
+                        "type": "string",
+                        "minLength": 4,
+                        "required": ["true"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
