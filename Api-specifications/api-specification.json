@@ -73,6 +73,32 @@
                     }
                   }
                 }
+              },
+              "examples": {
+                "user 1": {
+                  "value": {
+                    "name": "user 1",
+                    "email": "user1@gmail.com",
+                    "password": "password",
+                    "phone_number": "0832883232",
+                    "address": {
+                      "city": "Ranai",
+                      "street": "Jalan Pattimura"
+                    }
+                  }
+                },
+                "user 2": {
+                  "value": {
+                    "name": "user 2",
+                    "email": "user2@gmail.com",
+                    "password": "password",
+                    "phone_number": "083288323233",
+                    "address": {
+                      "city": "Jakarta",
+                      "street": "Jalan Ali Hasyim"
+                    }
+                  }
+                }
               }
             }
           }
@@ -102,6 +128,20 @@
                     "required": ["true"]
                   }
                 }
+              },
+              "examples": {
+                "user 1": {
+                  "value": {
+                    "email": "user1@gmail.com",
+                    "password": "password"
+                  }
+                },
+                "user 2": {
+                  "value": {
+                    "email": "user2@gmail.com",
+                    "password": "password"
+                  }
+                }
               }
             }
           }
@@ -109,7 +149,10 @@
       }
     },
     "/products": {
-      "get": { "summary": "get all data products", "responses": {} }
+      "get": {
+        "summary": "get all data products",
+        "responses": {}
+      }
     },
     "/products/{productName}": {
       "get": {
@@ -131,6 +174,22 @@
       },
       "post": {
         "summary": "add product to cart",
+        "requestBody": {
+          "content": {
+            "headers": {
+              "schema": {
+                "type": "object",
+                "required": ["true"],
+                "title": "Authorization"
+              },
+              "example": {
+                "value": {
+                  "Authorization": "s948439fh93f89h439hf484h"
+                }
+              }
+            }
+          }
+        },
         "responses": {},
         "parameters": [
           {
@@ -144,7 +203,26 @@
       }
     },
     "/cart": {
-      "get": { "summary": "get all data cart", "responses": {} }
+      "get": {
+        "summary": "get all data cart",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["true"],
+                "title": "Authorization"
+              },
+              "example": {
+                "value": {
+                  "Authorization": "s948439fh93f89h439hf484h"
+                }
+              }
+            }
+          }
+        },
+        "responses": {}
+      }
     },
     "/cart/address": {
       "post": {
