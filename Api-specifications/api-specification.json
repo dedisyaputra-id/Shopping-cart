@@ -71,6 +71,10 @@
                         "required": ["true"]
                       }
                     }
+                  },
+                  "token": {
+                    "type": "string",
+                    "nullable": true
                   }
                 }
               },
