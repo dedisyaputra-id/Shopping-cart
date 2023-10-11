@@ -26,7 +26,84 @@
     "/register": {
       "post": {
         "summary": "create new users",
-        "responses": {},
+        "responses": {
+          "201": {
+            "description": "success create new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string" },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "phone_number": { "type": "integer", "nullable": true },
+                    "address": {
+                      "type": "object",
+                      "properties": {
+                        "city": { "type": "string" },
+                        "street": { "type": "string" }
+                      },
+                      "nullable": true
+                    }
+                  }
+                },
+                "example": {
+                  "register user": {
+                    "value": {
+                      "id": 1,
+                      "name": "user 1",
+                      "email": "user1@gmail.com",
+                      "password": "password",
+                      "phone_number": "0832883232",
+                      "address": {
+                        "city": "Ranai",
+                        "street": "Jalan Pattimura"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "failed create new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": { "type": "string" }
+                  }
+                },
+                "examples": {
+                  "password error": {
+                    "value": {
+                      "errors": "minLength password must be 8 characters"
+                    }
+                  },
+                  "name error": {
+                    "value": {
+                      "errors": "name minLength must be 4 characters"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "errors": { "type": "string" } }
+                }
+              }
+            }
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
@@ -55,7 +132,7 @@
                     "type": "number",
                     "minLength": 12,
                     "maxLength": 12,
-                    "required": ["true"]
+                    "nullable": true
                   },
                   "address": {
                     "type": "object",
@@ -63,12 +140,12 @@
                       "city": {
                         "type": "string",
                         "minLength": 4,
-                        "required": ["true"]
+                        "nullable": true
                       },
                       "street": {
                         "type": "string",
                         "minLength": 4,
-                        "required": ["true"]
+                        "nullable": true
                       }
                     }
                   },
@@ -113,7 +190,50 @@
       "post": {
         "summary": "login for users",
         "description": "api for login users",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "login success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" }
+                  }
+                },
+                "example": {
+                  "login success": {
+                    "value": {
+                      "token": "94893f94h3f93h4hf943hf902h0r44hr"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "login failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "login failed": {
+                    "value": {
+                      "errors": "email or password wrong"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
@@ -155,13 +275,119 @@
     "/products": {
       "get": {
         "summary": "get all data products",
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "get all data products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "image": { "type": "string" },
+                      "name": { "type": "string" },
+                      "stock": { "type": "integer" },
+                      "price": { "type": "integer" },
+                      "category": {
+                        "type": "object",
+                        "properties": { "name": { "type": "string" } }
+                      },
+                      "description": { "type": "string" }
+                    }
+                  }
+                },
+                "example": {
+                  "value": [
+                    {
+                      "id": 1,
+                      "image": "product-001.jpg",
+                      "name": "Baju Koko",
+                      "stock": 115,
+                      "price": 20000,
+                      "category": {
+                        "name": "pakaian muslim"
+                      },
+                      "description": "baju koko muslim pria cocok untuk kawula muda"
+                    },
+                    {
+                      "id": 2,
+                      "image": "product-002.jpg",
+                      "name": "Baju gamis",
+                      "stock": 200,
+                      "price": 30000,
+                      "category": {
+                        "name": "pakaian muslim"
+                      },
+                      "description": "baju gamis wanita cocok untuk kawula muda"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/products/{productName}": {
       "get": {
         "summary": "get specific product data",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "responses api get product by name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "image": { "type": "string" },
+                    "name": { "type": "string" },
+                    "stock": { "type": "integer" },
+                    "price": { "type": "integer" },
+                    "category": {
+                      "type": "object",
+                      "properties": { "name": { "type": "string" } }
+                    },
+                    "description": { "type": "string" }
+                  }
+                },
+                "example": {
+                  "value": {
+                    "id": 2,
+                    "image": "product-002.jpg",
+                    "name": "Baju gamis",
+                    "stock": 200,
+                    "price": 30000,
+                    "category": {
+                      "name": "pakaian muslim"
+                    },
+                    "description": "baju gamis wanita cocok untuk kawula muda"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "error not found product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": { "type": "string" }
+                  }
+                },
+                "example": {
+                  "value": {
+                    "errors": "product not found"
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "productName",
@@ -194,7 +420,32 @@
             }
           }
         },
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": " success add product to cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "product_id": { "type": "integer" },
+                    "user_id": { "type": "integer" },
+                    "quantity": { "type": "integer" }
+                  }
+                },
+                "example": {
+                  "value": {
+                    "id": 1,
+                    "product_id": 2,
+                    "user_id": 1,
+                    "quantity": 2
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "productName",
@@ -225,7 +476,49 @@
             }
           }
         },
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "success get all data cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "product_id": { "type": "integer" },
+                      "user_id": { "type": "integer" },
+                      "quantity": { "type": "integer" }
+                    }
+                  }
+                },
+                "example": {
+                  "value": [
+                    {
+                      "id": 1,
+                      "product_id": 3,
+                      "user_id": 1,
+                      "quantity": 3
+                    },
+                    {
+                      "id": 2,
+                      "product_id": 2,
+                      "user_id": 1,
+                      "quantity": 3
+                    },
+                    {
+                      "id": 3,
+                      "product_id": 3,
+                      "user_id": 2,
+                      "quantity": 1
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/cart/address": {
