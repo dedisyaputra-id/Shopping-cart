@@ -25,6 +25,7 @@
   "paths": {
     "/register": {
       "post": {
+        "tags": ["Authentication"],
         "summary": "create new users",
         "responses": {
           "201": {
@@ -188,6 +189,7 @@
     },
     "/login": {
       "post": {
+        "tags": ["Authentication"],
         "summary": "login for users",
         "description": "api for login users",
         "responses": {
@@ -274,6 +276,7 @@
     },
     "/products": {
       "get": {
+        "tags": ["Products"],
         "summary": "get all data products",
         "responses": {
           "200": {
@@ -332,6 +335,7 @@
     },
     "/products/{productName}": {
       "get": {
+        "tags": ["Products"],
         "summary": "get specific product data",
         "responses": {
           "200": {
@@ -403,6 +407,7 @@
         ]
       },
       "post": {
+        "tags": ["Products"],
         "summary": "add product to cart",
         "requestBody": {
           "content": {
@@ -459,6 +464,7 @@
     },
     "/cart": {
       "get": {
+        "tags": ["Cart"],
         "summary": "get all data cart",
         "requestBody": {
           "content": {
@@ -523,6 +529,7 @@
     },
     "/cart/address": {
       "post": {
+        "tags": ["Cart"],
         "summary": "create address for product data",
         "responses": {},
         "requestBody": {
@@ -556,6 +563,7 @@
     },
     "/cart/{productName}": {
       "delete": {
+        "tags": ["Cart"],
         "summary": "delete specific product",
         "responses": {},
         "parameters": [
@@ -571,6 +579,7 @@
     },
     "/cart/checkout": {
       "post": {
+        "tags": ["Cart"],
         "summary": "checkout product from cart",
         "responses": {},
         "requestBody": {
@@ -608,5 +617,21 @@
         }
       }
     }
+  },
+  "components": {
+    "parameters": {
+      "productName": {
+        "name": "productName",
+        "in": "path",
+        "required": true,
+        "description": "productName for get specific product",
+        "schema": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 100
+        }
+      }
+    },
+    "schemas": {}
   }
 }
