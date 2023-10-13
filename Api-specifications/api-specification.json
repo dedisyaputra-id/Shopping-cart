@@ -531,7 +531,24 @@
       "post": {
         "tags": ["Cart"],
         "summary": "create address for product data",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "success add new address to cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "address": { "type": "string" } }
+                },
+                "example": {
+                  "value": {
+                    "address": "jln.pattimura"
+                  }
+                }
+              }
+            }
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
@@ -565,7 +582,40 @@
       "delete": {
         "tags": ["Cart"],
         "summary": "delete specific product",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "success delete product from cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "data": { "type": "string" } }
+                },
+                "example": {
+                  "value": {
+                    "data": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "failed delete product from cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "errors": { "type": "string" } }
+                },
+                "example": {
+                  "value": {
+                    "errors": "Product not found"
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "productName",
@@ -581,7 +631,50 @@
       "post": {
         "tags": ["Cart"],
         "summary": "checkout product from cart",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "success checkout product from cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer" },
+                        "total_product": { "type": "integer" },
+                        "price": { "type": "integer" },
+                        "address": {
+                          "type": "object",
+                          "properties": {
+                            "city": { "type": "string" },
+                            "street": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "value": {
+                    "data": {
+                      "id": 1,
+                      "total_product": 2,
+                      "price": 300000,
+                      "address": {
+                        "city": "Ranai",
+                        "street": "jalan Pattimura"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
