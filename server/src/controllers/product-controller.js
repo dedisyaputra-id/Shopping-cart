@@ -15,14 +15,39 @@ const post = async (req, res, next) => {
     });
   } catch (error) {
     if (req.file) {
-      fs.unlink("../client/public/assets/products/" + req.file.filename);
+      fs.unlink("../client/public/assets/product/" + req.file.filename);
       next(error);
     }
     next(error);
   }
 };
+const addToCart = async (req, res, next) => {
+  try {
+    const products = await productService.addToCart(
+      req.params.productName,
+      req.body
+    );
+    res.status(201).json({
+      data: products,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
+const productByName = async (req, res, next) => {
+  try {
+    const product = await productService.productByName(req.params);
+    res.status(200).json({
+      data: product,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export default {
   get,
   post,
+  addToCart,
+  productByName,
 };

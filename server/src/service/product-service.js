@@ -36,6 +36,7 @@ const post = async (request, image) => {
   const result = await prismaDb.product.create({
     data: {
       image: image.filename,
+      slug: validate.name.replace(" ", "-").toLowerCase(),
       ...validate,
     },
     include: {
@@ -50,7 +51,63 @@ const post = async (request, image) => {
   return result;
 };
 
+const addToCart = async (params, request) => {
+  const product = await prismaDb.product.findUnique({
+    where: {
+      slug: params,
+    },
+  });
+
+  if (!product) {
+    throw new responseError(404, "product not found");
+  }
+
+  const cart = await prismaDb.cart.findUnique({
+    where: {
+      product_id: product.id,
+    },
+  });
+
+  if (!cart) {
+    const result = await prismaDb.cart.create({
+      data: {
+        product_id: product.id,
+        user_id: 2,
+        quantity: request.quantity,
+      },
+    });
+    return result;
+  }
+
+  const result = await prismaDb.cart.update({
+    where: {
+      product_id: cart.product_id,
+    },
+    data: {
+      quantity: request.quantity + cart.quantity,
+    },
+  });
+
+  return result;
+};
+
+const productByName = async (params) => {
+  const product = await prismaDb.product.findUnique({
+    where: {
+      slug: params.productName,
+    },
+  });
+
+  if (!product) {
+    throw new responseError(404, "product not found");
+  }
+
+  return product;
+};
+
 export default {
   get,
   post,
+  addToCart,
+  productByName,
 };

@@ -31,3 +31,13 @@ describe("POST /api/products", () => {
     expect(result.body.data).toBeDefined();
   });
 });
+
+describe("GET /api/products/:productName", () => {
+  const productName = "product-25";
+  it("should get product by name", async () => {
+    const result = await supertest(web).get("/api/products/" + productName);
+
+    expect(result.status).toBe(200);
+    expect(result.body.data).toBeDefined();
+  });
+});
