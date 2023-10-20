@@ -15,7 +15,7 @@ model User{
   password String @db.VarChar(100)
   address String? @db.VarChar(100) 
   phone_number Int? @db.Int
-  token String? @db.VarChar(100)
+  token String? @db.VarChar(100) 
   cart Cart[]
   @@map("users")
 }

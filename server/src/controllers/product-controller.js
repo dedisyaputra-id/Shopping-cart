@@ -28,7 +28,7 @@ const addToCart = async (req, res, next) => {
       req.body
     );
     res.status(201).json({
-      data: products,
+      data: "OK",
     });
   } catch (error) {
     next(error);
